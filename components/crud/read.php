@@ -21,7 +21,7 @@ require_once(__DIR__. '/../cardResult.php');
 
 
 $query = "INSERT INTO $table($stringData) VALUES ($varData)";
-
+echo $query;
 */
 $table = null;
 $date = null;
@@ -37,7 +37,7 @@ if (isset($_GET['t'])) {
         case "results":
             $table = "resultats_sportifs";
             $date = "match";
-            $title = "Résultat";
+            $title = "Résultats";
             break;
         default:
             die("Mauvais lien");

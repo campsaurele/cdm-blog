@@ -1,9 +1,9 @@
-<?php 
-    $links = [
-        "Articles" => "article.php?t=articles",
-        "Résultats" => "resultat.php?t=results"
-    ];
-    $base_href = "/cdm-blog/public/"
+<?php
+$links = [
+    "Articles" => "/cdm-blog/public/article.php?t=articles",
+    "Résultats" => "/cdm-blog/public/resultat.php?t=results"
+];
+//    $base_href = "/cdm-blog/public/"
 
 
 ?>
@@ -17,9 +17,9 @@
             </a>
         </div>
         <ul class=" navbar-nav me-auto">
-            <?php foreach($links as $name => $href) : ?>
+            <?php foreach ($links as $name => $href) : ?>
             
-            <li class="nav-item text-decoration-none"><a class="nav-link" href="<?= $base_href.$href ?>"><?= $name ?></a></li>
+            <li class="nav-item text-decoration-none"><a class="nav-link" href="<?= $href ?>"><?= $name ?></a></li>
             <?php endforeach ?>            
         </ul>
 
