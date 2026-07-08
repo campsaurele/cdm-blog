@@ -7,17 +7,20 @@ function create()
     $href = null;
     $title = null;
 
+
+
     if (isset($_GET['t'])) {
         switch ($_GET['t']) {
             case "articles":
                 $href = "/cdm-blog/public/article.php?t=articles";
                 $title = "article";
 
+
                 return "<div class=\"container\">
     
                 <h1 class=\"mb-3\">Ajouter un ".$title."</h1>
                 ".buttonBack($href)."    
-                <form action=\"../components/crud/create-post.php?t=".$_GET['t']."\" method=\"POST\">
+                <form action=\"../components/crud/create-post.php?t=".$_GET['t']."\" method=\"POST\" enctype=\"multipart/form-data\">
                 
                 <!-- CHAMP : AUTEUR -->
                 <div class=\"mb-3\">
@@ -48,9 +51,15 @@ function create()
                 
                 <textarea class=\"form-control\" placeholder=\"Seulement du contenu vous appartenant ou libre de droits.\" id=\"contenu\" name=\"contenu\" required></textarea>
                 </div>
+
+                <!-- CHAMP : IMAGE -->
+                <div class=\"mb-3\">
+                <label for=\"image\" class=\"form-label\">Image de l'article</label>
+                <input type=\"file\" class=\"form-control\" id=\"image\" name=\"image\" aria-describedby=\"titre-help\">
+                </div>
                 
                 <!-- BOUTONS D'ACTION -->
-                <button type=\"submit\" class=\"btn btn-primary\">Envoyer</button>
+                <button type=\"submit\" class=\"btn btn-primary mb-4\">Envoyer</button>
                 <br>
                 
                 </form>
@@ -115,13 +124,12 @@ function create()
 
                 
                 <!-- BOUTONS D'ACTION -->
-                <button type=\"submit\" class=\"btn btn-primary\">Envoyer</button>
+                <button type=\"submit\" class=\"btn btn-primary mb-4\">Envoyer</button>
                 <br>
                 
                 </form>
                 </div>";
 
-                break;
             default:
                 die("Pas de tables correctement selection dans le switch");
         };

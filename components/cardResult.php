@@ -9,7 +9,6 @@ function cardResultat(string $equipe1, string $equipe2, string $date, string $sc
 {
 
     return "<article class=\"card\" style=\"width: 18rem;\">
-        <img src=\"...\" class=\" card-img-top\" alt=\"Image de la card \">
         <div class=\"card-body\">
             <small>le ". htmlspecialchars($date)."</small>
             

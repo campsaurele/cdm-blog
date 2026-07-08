@@ -37,7 +37,7 @@ function update()
     
                 <h1 class=\"mb-3\">Modifier l'".$title." n° ".$id."</h1>
                 ".buttonBack($href)."    
-                <form action=\"../components/crud/update-post.php?t=".$_GET['t']."&id=".$_GET['id']."\" method=\"POST\">
+                <form action=\"../components/crud/update-post.php?t=".$_GET['t']."&id=".$_GET['id']."\" method=\"POST\" enctype=\"multipart/form-data\">
                 
                 <!-- CHAMP : AUTEUR -->
                 <div class=\"mb-3\">
@@ -69,7 +69,13 @@ function update()
                 <textarea class=\"form-control\" placeholder=\"Seulement du contenu vous appartenant ou libre de droits.\" id=\"contenu\" name=\"contenu\" required>".$news[0]['contenu']."</textarea>
                 </div>
 
-                <input type=\"hidden\" class=\"form-control\" id=\"id\" name=\"id\" value=\"".$news[0]['auteur']."\">
+                <!-- CHAMP : IMAGE -->
+                <div class=\"mb-3\">
+                <label for=\"image\" class=\"form-label\">Image de l'article</label>
+                <input type=\"file\" class=\"form-control\" id=\"image\" name=\"image\" aria-describedby=\"titre-help\" value=\"".$news[0]['image']."\">
+                </div>
+
+                <input type=\"hidden\" class=\"form-control\" id=\"id\" name=\"id\" value=\"".$news[0]['id']."\">
                 
                 <!-- BOUTONS D'ACTION -->
                 <button type=\"submit\" class=\"btn btn-primary\">Envoyer</button>

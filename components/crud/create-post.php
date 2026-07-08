@@ -43,16 +43,50 @@ if (!$validate) {
 $stringData = trim(strip_tags(implode(", ", array_keys($postData))));
 $holderData = trim(strip_tags(implode(", ", array_map('transformPlaceholder', array_keys($postData)))));
 
-echo $stringData."<br>".$holderData."<br>";
-var_dump($postData);
 
 $SQLquery =  "INSERT INTO $table($stringData) VALUES ($holderData)";
 
-echo $SQLquery;
 
 $create = $mysqlClient->prepare($SQLquery);
 
 $create->execute($postData);
+
+$imageId = $mysqlClient->lastInsertId();
+// ============================================================
+// TRAITEMENT DE L'UPLOAD D'IMAGE
+// ============================================================
+// $_FILES est un tableau contenant les informations sur les fichiers uploadés
+
+// Vérification qu'une image a été uploadée et qu'il n'y a pas d'erreur
+// $_FILES['image']['error'] == 0 signifie : pas d'erreur lors de l'upload
+if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+
+    // Vérification du type MIME du fichier (sécurité)
+    // mime_content_type() détecte le vrai type du fichier (pas juste l'extension)
+    $typeMime = mime_content_type($_FILES['image']['tmp_name']);
+
+    // On accepte uniquement les images webp
+    if ($typeMime === "image/webp") {
+
+        // Déplacement du fichier temporaire vers le dossier img/
+        // avec renommage selon l'ID de l'article
+        $dossier = __DIR__."/../../assets/img/";
+        $nomFichier = $imageId . ".webp";
+
+        // move_uploaded_file() déplace le fichier du dossier temporaire vers sa destination finale
+        // $_FILES['image']['tmp_name'] = chemin temporaire du fichier uploadé
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $nomFichier)) {
+            echo "Image enregistrée avec succès.";
+        } else {
+            echo "Erreur lors de l'enregistrement de l'image.";
+        }
+
+
+    } else {
+        echo "Erreur : seul le format webp est accepté.";
+    }
+}
+
 
 ?>
 

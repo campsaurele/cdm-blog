@@ -27,7 +27,24 @@ if (isset($_GET['t'])) {
 
 
 $postData = cleanPostValue($_POST);
-$getData = cleanPostValue($_GET);
+
+$imageId = $postData['id'];
+$path = __DIR__."/../../assets/img/";
+$fileName = $imageId . ".webp";
+$filePath = $path . $fileName;
+$delImg = null;
+
+if (file_exists($filePath) && is_file($filePath)) {
+    if (unlink($filePath)) {
+        $delImg = "L'image à bien été supprimer du répertoire img";
+    } else {
+        $delImg = "Erreur lors de la suppression.";
+    }
+} else {
+    $delImg = "Le fichier n'existe pas ou n'est pas un fichier.";
+}
+
+
 
 $sqlQuery = "DELETE FROM $table WHERE id = :id";
 
@@ -53,7 +70,7 @@ $delete->execute($postData);
     <div class="container">
 
         <h1><?= $title ?> supprimé avec succès ! </h1>
-
+        <h2><?= $delImg ?></h2>
         <br>
         <?=  buttonBack('/cdm-blog/public/article.php?t='.$_GET['t']); ?>
 

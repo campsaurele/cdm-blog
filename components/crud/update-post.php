@@ -32,8 +32,10 @@ if (isset($_GET['t']) && isset($_GET['id'])) {
 }
 
 $postData = cleanPostValue($_POST);
-
+$updateData = $postData; // copy postData for futur use
 $validate = validatePost($postData, $required);
+
+$imageId = $postData['id'];
 
 if (!$validate) {
     echo "Les champs ne sont pas remplis <br>";
@@ -41,19 +43,44 @@ if (!$validate) {
     return;
 }
 
+$loadImg = null;
+if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+
+    // Vérification du type MIME du fichier (sécurité)
+    // mime_content_type() détecte le vrai type du fichier (pas juste l'extension)
+    $typeMime = mime_content_type($_FILES['image']['tmp_name']);
+
+    // On accepte uniquement les images webp
+    if ($typeMime === "image/webp") {
+
+        // Déplacement du fichier temporaire vers le dossier img/
+        // avec renommage selon l'ID de l'article
+        $dossier = __DIR__."/../../assets/img/";
+        $nomFichier = $imageId . ".webp";
+
+        // move_uploaded_file() déplace le fichier du dossier temporaire vers sa destination finale
+        // $_FILES['image']['tmp_name'] = chemin temporaire du fichier uploadé
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $nomFichier)) {
+            $loadImg = "Image enregistrée avec succès.";
+        } else {
+            $loadImg = "Erreur lors de l'enregistrement de l'image.";
+        }
+
+
+    } else {
+        echo "Erreur : seul le format webp est accepté.";
+    }
+}
 
 
 
-$setData = implode(", ", array_map('transformSetdata', array_keys($postData), array_map('transformPlaceholder', array_keys($postData))));
+unset($updateData['id']); // removing id here before creating setData
+
+$setData = implode(", ", array_map('transformSetdata', array_keys($updateData), array_map('transformPlaceholder', array_keys($updateData))));
 $setId = "id = :id";
 // objectif : $setData = "$string = $holder, $string = $holder, $string = $holder etc..."
 
-var_dump($setData);
-var_dump($postData);
-
 $SQLquery =  "UPDATE $table SET $setData WHERE $setId";
-
-echo $SQLquery;
 
 $update = $mysqlClient->prepare($SQLquery);
 
@@ -79,7 +106,8 @@ $update->execute($postData);
 
         <h1><?= $title ?> modifié avec succès ! </h1>
 
-        <?php showPost($postData); ?>
+        <?php showPost($updateData); ?>
+        <?= '<p>'.$loadImg.'<p>' ?>
         <br>
         <?=  buttonBack('/cdm-blog/public/article.php?t='.$_GET['t']); ?>
 
