@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/../config/config.php');
 require_once(__DIR__.'/button.php');
+require_once(__DIR__.'/modal.php');
 require_once(__DIR__.'/function/truncate.php');
 
 function cardArticle(string $title, string $desc, string $date, string $author, string $id): string
@@ -21,10 +22,13 @@ function cardArticle(string $title, string $desc, string $date, string $author, 
               "<div class=\"d-flex flex-row\">"
               .
                   buttonModif(BASE_URL.'/admin/update.php?t='.$_GET['t'].'&id='.htmlspecialchars($id)).
-                  buttonSuppr(BASE_URL.'/admin/delete.php?t='.$_GET['t'].'&id='.htmlspecialchars($id))
+                  buttonModal(htmlspecialchars($id))
               .
               "</div>
         </div>
         <div class=\"card-footer\"></div>
+        
+        ".modal($_GET['t'], $id, $title)."
+
     </article>";
 }
