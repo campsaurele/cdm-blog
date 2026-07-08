@@ -4,16 +4,22 @@ require_once(__DIR__.'/../../config/bdd_connect.php');
 require_once(__DIR__.'/../function/transformPlaceholder.php');
 require_once(__DIR__.'/../function/cleanPost.php');
 require_once(__DIR__.'/../function/showPost.php');
+require_once(__DIR__.'/../button.php');
+require_once(__DIR__.'/../function/validatePost.php');
+
+
 
 if (isset($_GET['t'])) {
     switch ($_GET['t']) {
         case "articles":
             $table = "articles_presse";
             $title = "Articles";
+            $required = ["titre","auteur","contenu","date_publication","match_id"];
             break;
         case "results":
             $table = "resultats_sportifs";
             $title = "Résultat";
+            $required = ["equipe1","equipe2","score","resume","lieu","date_match",];
             break;
         default:
             die("Mauvais lien de recherche");
@@ -23,6 +29,16 @@ if (isset($_GET['t'])) {
 }
 
 $postData = cleanPostValue($_POST);
+
+$validate = validatePost($postData, $required);
+
+if (!$validate) {
+    echo "Les champs ne sont pas remplis <br>";
+    echo buttonBack('/cdm-blog/admin/add.php?t='.$_GET['t']);
+    return;
+}
+
+
 
 $stringData = trim(strip_tags(implode(", ", array_keys($postData))));
 $holderData = trim(strip_tags(implode(", ", array_map('transformPlaceholder', array_keys($postData)))));
@@ -59,7 +75,9 @@ $create->execute($postData);
         <h1><?= $title ?> ajouté avec succès ! </h1>
 
         <?php showPost($postData); ?>
-        
+        <br>
+        <?=  buttonBack('/cdm-blog/public/article.php?t='.$_GET['t']); ?>
+
     </div>
 </body>
 
