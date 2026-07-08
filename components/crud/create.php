@@ -23,7 +23,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"auteur\" class=\"form-label\">Auteur de l'article</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"auteur\" name=\"auteur\">
+                <input type=\"text\" class=\"form-control\" id=\"auteur\" name=\"auteur\" required>
                 </div>
 
                 <!-- CHAMP : ID MATCH -->
@@ -38,7 +38,7 @@ function create()
                 <!-- CHAMP : TITRE -->
                 <div class=\"mb-3\">
                 <label for=\"titre\" class=\"form-label\">Titre de l'article</label>
-                <input type=\"text\" class=\"form-control\" id=\"titre\" name=\"titre\" aria-describedby=\"titre-help\">
+                <input type=\"text\" class=\"form-control\" id=\"titre\" name=\"titre\" aria-describedby=\"titre-help\" required>
                 <div id=\"titre-help\" class=\"form-text\">Choisissez un titre percutant !</div>
                 </div>
                 
@@ -46,7 +46,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"contenu\" class=\"form-label\">contenu de l'article</label>
                 
-                <textarea class=\"form-control\" placeholder=\"Seulement du contenu vous appartenant ou libre de droits.\" id=\"contenu\" name=\"contenu\"></textarea>
+                <textarea class=\"form-control\" placeholder=\"Seulement du contenu vous appartenant ou libre de droits.\" id=\"contenu\" name=\"contenu\" required></textarea>
                 </div>
                 
                 <!-- BOUTONS D'ACTION -->
@@ -71,13 +71,13 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"equipe1\" class=\"form-label\">Equipe 1</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"equipe1\" name=\"equipe1\">
+                <input type=\"text\" class=\"form-control\" id=\"equipe1\" name=\"equipe1\" required>
                 </div>
 
                 <div class=\"mb-3\">
                 <label for=\"equipe2\" class=\"form-label\">Equipe 2</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"equipe2\" name=\"equipe2\">
+                <input type=\"text\" class=\"form-control\" id=\"equipe2\" name=\"equipe2\" required>
                 </div>
 
                 <!-- CHAMP : SCORE -->
@@ -85,7 +85,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"score\" class=\"form-label\">Score</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"score\" name=\"score\">
+                <input type=\"text\" class=\"form-control\" id=\"score\" name=\"score\" required>
                 </div>.
 
                 <!-- CHAMP : RESUME -->
@@ -93,7 +93,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"resume\" class=\"form-label\">Resumé</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"resume\" name=\"resume\">
+                <input type=\"text\" class=\"form-control\" id=\"resume\" name=\"resume\" required>
                 </div>
 
                 <!-- CHAMP : LIEU -->
@@ -101,7 +101,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"lieu\" class=\"form-label\">Lieu du match</label>
                 
-                <input type=\"text\" class=\"form-control\" id=\"lieu\" name=\"lieu\">
+                <input type=\"text\" class=\"form-control\" id=\"lieu\" name=\"lieu\" required>
                 </div>
                 
                 <!-- CHAMP : DATE -->
@@ -109,7 +109,7 @@ function create()
                 <div class=\"mb-3\">
                 <label for=\"date_match\" class=\"form-label\">Date du match</label>
                 
-                <input type=\"date\" class=\"form-control\" id=\"date_match\" name=\"date_match\">
+                <input type=\"date\" class=\"form-control\" id=\"date_match\" name=\"date_match\" required>
                 </div>
                 
 
