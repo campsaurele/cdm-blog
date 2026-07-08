@@ -77,7 +77,7 @@ foreach ($news as $new) {
                 break;
 
             case "articles_presse":
-                echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['match_id']);
+                echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['id']);
                 break;
 
             default:
