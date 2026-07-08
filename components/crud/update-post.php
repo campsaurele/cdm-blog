@@ -55,9 +55,9 @@ $SQLquery =  "UPDATE $table SET $setData WHERE $setId";
 
 echo $SQLquery;
 
-$create = $mysqlClient->prepare($SQLquery);
+$update = $mysqlClient->prepare($SQLquery);
 
-$create->execute($postData);
+$update->execute($postData);
 
 ?>
 

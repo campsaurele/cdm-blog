@@ -14,7 +14,7 @@ function modal(string $lign, string $id, string $title)
 
             </div>
                 <div class=\"modal-body\">
-                    <form action=\"/cdm-blog/admin/delete.php?t=".$lign."&id=".$id."\" method=\"POST\">
+                    <form action=\"/cdm-blog/components/crud/delete-post.php?t=".$lign."\" method=\"POST\">
 
                         <div class=\"mb-3\">
                         <!-- Label informatif (même s'il est caché) -->
