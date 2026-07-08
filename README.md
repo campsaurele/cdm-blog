@@ -17,3 +17,13 @@ Next Hard step would also to generate automatically forms (in create and update)
 - VS Code
 - WampServer
 - Php Doc
+
+## To do List
+
+Feature to implement later in the project
+
+- in function cleanPost.php :
+
+preg_replace('/\s+/', ' ', $content);
+To add later: replace multiple spaces with a single space.
+Might be a problem for text areas because it removes tabs, spaces, and line breaks.
