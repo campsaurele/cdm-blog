@@ -13,12 +13,8 @@
 <body>
     <?php include __DIR__. '/../layout/header.php'; ?>
 
-    <h1 class="text-center">Résultats</h1>
 
-     <?= buttonAdd('/cdm-blog/admin/add.php?t=results'); ?>
-     <section class="d-flex flex-wrap justify-content-evenly gap-3">
-    
-        <?php include __DIR__. '/../components/crud/read.php'; ?>
+    <?php include __DIR__. '/../components/crud/read.php'; ?>
 
      </section>
 </body>

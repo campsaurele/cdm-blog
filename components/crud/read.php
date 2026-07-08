@@ -25,17 +25,19 @@ $query = "INSERT INTO $table($stringData) VALUES ($varData)";
 */
 $table = null;
 $date = null;
-
+$title = null;
 
 if (isset($_GET['t'])) {
     switch ($_GET['t']) {
         case "articles":
             $table = "articles_presse";
             $date = "publication";
+            $title = "Articles";
             break;
         case "results":
             $table = "resultats_sportifs";
             $date = "match";
+            $title = "Résultat";
             break;
         default:
             echo "Mauvais lien";
@@ -46,6 +48,7 @@ if (isset($_GET['t'])) {
 
 // cardResultat(string $equipe1, string $equipe2, string $date, string $score, string $resume, string $lieu, string $id)
 // cardArticle(string $title, string $desc, string $date, string $author, string $id)
+
 if ($table !== null && $date !== null) {
     $sqlQuery = '
         SELECT *
@@ -60,6 +63,11 @@ if ($table !== null && $date !== null) {
 } else {
     die("Table ou date null");
 }
+
+echo "<section class=\"d-flex flex-column\">";
+echo "<h1 class=\"text-center\">".$title."</h1>";
+echo buttonAdd("/cdm-blog/admin/add.php?t=".$_GET['t']);
+echo "<div class=\"d-flex flex-wrap justify-content-evenly gap-3\">";
 
 foreach ($news as $new) {
     if (isset($table)) {
@@ -79,6 +87,8 @@ foreach ($news as $new) {
         echo "pas de table selectionner, erreur if boucle foreach";
     }
 }
+echo "</div>";
+echo "</section>";
 
 ?>
 
