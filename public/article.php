@@ -1,0 +1,24 @@
+<?php require_once(__DIR__.'/../components/button.php'); ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/cdm-blod/assets/css/style.css">
+    <title>CDM 2026 - Articles</title>
+</head>
+<body>
+    <?php include __DIR__. '/../layout/header.php'; ?>
+
+    <h1 class="text-center">Articles</h1>
+    
+    <?= buttonAdd('/cdm-blog/admin/add.php?t=articles'); ?>
+    <section class="d-flex flex-wrap justify-content-evenly gap-3">
+
+        <?php include __DIR__. '/../components/crud/read.php'; ?>
+    
+    </section>
+</body>
+</html>
