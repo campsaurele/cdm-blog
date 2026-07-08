@@ -8,11 +8,20 @@ function buttonModif(string $href): string
     return "<a class=\"btn btn-primary mb-2 me-2\" href=\"$href\">Modifier</a>";
 }
 
-function buttonSuppr(string $href): string
+function buttonModal(string $id): string
+{
+    return "<button type=\"button\" class=\"btn btn-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#modal".$id."\">
+  Supprimer
+</button>";
+}
+
+function buttonModalSuppr(string $href): string
 {
     $href = htmlspecialchars($href);
     return "<a class=\"btn btn-danger mb-2\" href=\"$href\">Supprimer</a>";
 }
+
+
 
 function buttonBack(string $href): string
 {
