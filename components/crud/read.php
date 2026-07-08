@@ -40,7 +40,7 @@ if (isset($_GET['t'])) {
             $title = "Résultat";
             break;
         default:
-            echo "Mauvais lien";
+            die("Mauvais lien");
     };
 } else {
     die("Touche pas l'url, hacker");

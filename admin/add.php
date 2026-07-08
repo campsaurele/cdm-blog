@@ -14,6 +14,6 @@
     <?php include __DIR__. '/../layout/header.php'; ?>
 
     <?= create() ?>
-
+    
 </body>
 </html>
