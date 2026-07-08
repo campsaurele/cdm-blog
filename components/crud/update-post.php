@@ -45,7 +45,7 @@ if (!$validate) {
 
 
 $setData = implode(", ", array_map('transformSetdata', array_keys($postData), array_map('transformPlaceholder', array_keys($postData))));
-$setId = $id." = ". transformPlaceholder($id);
+$setId = "id = :id";
 // objectif : $setData = "$string = $holder, $string = $holder, $string = $holder etc..."
 
 var_dump($setData);
@@ -55,7 +55,7 @@ $SQLquery =  "UPDATE $table SET $setData WHERE $setId";
 
 echo $SQLquery;
 
-/* $create = $mysqlClient->prepare($SQLquery);
+$create = $mysqlClient->prepare($SQLquery);
 
 $create->execute($postData);
 
@@ -77,7 +77,7 @@ $create->execute($postData);
 
     <div class="container">
 
-        <h1><?= $title ?> ajouté avec succès ! </h1>
+        <h1><?= $title ?> modifié avec succès ! </h1>
 
         <?php showPost($postData); ?>
         <br>
@@ -86,4 +86,4 @@ $create->execute($postData);
     </div>
 </body>
 
-</html> */
+</html> 
