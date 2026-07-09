@@ -70,22 +70,20 @@ echo buttonAdd("/cdm-blog/admin/add.php?t=".$_GET['t']);
 echo "<div class=\"d-flex flex-wrap justify-content-evenly gap-3\">";
 
 foreach ($news as $new) {
-    if (isset($table)) {
-        switch ($table) {
-            case "resultats_sportifs":
-                echo cardResultat($new['equipe1'], $new['equipe2'], $new['date_match'], $new['score'], $new['resume'], $new['lieu'], $new['id']);
-                break;
 
-            case "articles_presse":
-                echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['id']);
-                break;
+    switch ($table) {
+        case "resultats_sportifs":
+            echo cardResultat($new['equipe1'], $new['equipe2'], $new['date_match'], $new['score'], $new['resume'], $new['lieu'], $new['id']);
+            break;
 
-            default:
-                echo "Kessispass encore";
-        }
-    } else {
-        echo "pas de table selectionner, erreur if boucle foreach";
+        case "articles_presse":
+            echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['id']);
+            break;
+
+        default:
+            echo "Kessispass encore";
     }
+
 }
 echo "</div>";
 echo "</section>";
