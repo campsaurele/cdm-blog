@@ -19,7 +19,7 @@ function cardResultat(string $equipe1, string $equipe2, string $date, string $sc
             <small>à ". htmlspecialchars($lieu)."</small>
             <p class=\" card-text\">". truncateString(htmlspecialchars($resume))."</p>"
               .
-              buttonMore(BASE_URL.'/read.php?id='.htmlspecialchars($id))
+              buttonMore(BASE_URL.'/public/resultat.php?t='.$_GET['t'].'&id='.htmlspecialchars($id))
               .
               "<div class=\"d-flex flex-row\">"
               .

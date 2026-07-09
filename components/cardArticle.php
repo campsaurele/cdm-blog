@@ -32,7 +32,7 @@ function cardArticle(string $title, string $desc, string $date, string $author, 
             <small>par ". htmlspecialchars($author)."</small>
             <p class=\" card-text\">". truncateString(htmlspecialchars($desc))."</p>"
               .
-              buttonMore(BASE_URL.'/read.php?id='.htmlspecialchars($id))
+              buttonMore(BASE_URL.'/public/article.php?t='.$_GET['t'].'&id='.htmlspecialchars($id))
               .
               "<div class=\"d-flex flex-row\">"
               .

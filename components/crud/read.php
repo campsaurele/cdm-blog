@@ -2,7 +2,10 @@
 
 include(__DIR__. '/../../config/bdd_connect.php');
 require_once(__DIR__. '/../cardArticle.php');
+require_once(__DIR__. '/../pageArticle.php');
 require_once(__DIR__. '/../cardResult.php');
+require_once(__DIR__. '/../pageResult.php');
+require_once(__DIR__. '/../function/cleanPost.php');
 
 /*
  function transformVar(string $string)
@@ -49,9 +52,9 @@ if (isset($_GET['t'])) {
 // cardResultat(string $equipe1, string $equipe2, string $date, string $score, string $resume, string $lieu, string $id)
 // cardArticle(string $title, string $desc, string $date, string $author, string $id)
 
-if ($table !== null && $date !== null) {
+if (!isset($_GET['id'])) {
     $sqlQuery = '
-        SELECT *
+    SELECT *
         FROM '.$table.'
         ORDER BY date_'.$date.'
         DESC;';
@@ -60,33 +63,67 @@ if ($table !== null && $date !== null) {
     $newsFraiches->execute();
 
     $news = $newsFraiches->fetchAll();
-} else {
-    die("Table ou date null");
-}
 
-echo "<section class=\"d-flex flex-column\">";
-echo "<h1 class=\"text-center\">".$title."</h1>";
-echo buttonAdd("/cdm-blog/admin/add.php?t=".$_GET['t']);
-echo "<div class=\"d-flex flex-wrap justify-content-evenly gap-3\">";
+    echo "<section class=\"d-flex flex-column\">";
+    echo "<h1 class=\"text-center\">".$title."</h1>";
+    echo buttonAdd("/cdm-blog/admin/add.php?t=".$_GET['t']);
+    echo "<div class=\"d-flex flex-wrap justify-content-evenly gap-3\">";
 
-foreach ($news as $new) {
+    foreach ($news as $new) {
+
+        switch ($table) {
+            case "resultats_sportifs":
+                echo cardResultat($new['equipe1'], $new['equipe2'], $new['date_match'], $new['score'], $new['resume'], $new['lieu'], $new['id']);
+                break;
+
+            case "articles_presse":
+                echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['id']);
+                break;
+        }
+
+    }
+    echo "</div>";
+    echo "</section>";
+
+} elseif (isset($_GET['id'])) {
+
+    $getData = cleanPostValue($_GET);
+
+
+    $sqlQuery = "
+        SELECT *
+            FROM $table
+            WHERE id = :id";
+
+
+    $newsFraiches = $mysqlClient->prepare($sqlQuery);
+
+
+    $newsFraiches->bindValue(':id', $getData['id']);
+
+    $newsFraiches->execute();
+
+
+    $news = $newsFraiches->fetch();
+
+
+
+
+
 
     switch ($table) {
         case "resultats_sportifs":
-            echo cardResultat($new['equipe1'], $new['equipe2'], $new['date_match'], $new['score'], $new['resume'], $new['lieu'], $new['id']);
+            echo pageResult($news['equipe1'], $news['equipe2'], $news['date_match'], $news['score'], $news['resume'], $news['lieu'], $news['id']);
             break;
 
         case "articles_presse":
-            echo cardArticle($new['titre'], $new['contenu'], $new['date_publication'], $new['auteur'], $new['id']);
+            echo pageArticle($news['titre'], $news['contenu'], $news['date_publication'], $news['auteur'], $news['id']);
             break;
-
-        default:
-            echo "Kessispass encore";
     }
 
-}
-echo "</div>";
-echo "</section>";
 
+} else {
+    echo "l'id n'existe pas";
+}
 ?>
 
