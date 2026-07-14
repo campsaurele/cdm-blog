@@ -1,0 +1,130 @@
+<?php
+
+/*
+ * Traitement du formulaire de connexion - submit-login.php
+ * =========================================================
+ *
+ * Ce fichier traite les données soumises par le formulaire de connexion.
+ * Il vérifie les identifiants et connecte l'utilisateur si tout est correct.
+ *
+ * ⚠️ IMPORTANT : Ce fichier ne contient PAS de HTML, c'est un fichier de traitement pur.
+ * Après traitement, il redirige toujours vers index.php.
+ *
+ * 📚 Concepts abordés :
+ * - Traitement de formulaire POST
+ * - Validation des données
+ * - Authentification avec mot de passe hashé (password_hash / password_verify)
+ * - Stockage d'informations en session
+ * - Redirection après traitement
+ *
+ * ⚠️ SÉCURITÉ : Pour aller plus loin en production, il faudrait aussi :
+ * - Limiter les tentatives de connexion
+ * - Protéger contre les attaques par force brute
+ */
+
+// Démarrage de la session pour stocker les informations de connexion
+session_start();
+
+// Inclusion de la connexion à la base de données
+require(__DIR__ . '/../config/bdd_connect.php');
+
+// Inclusion des fonctions (notamment redirectToUrl et la liste des abonnés)
+include(__DIR__ . '/function/redirect.php');
+
+
+// ============================================================================
+// RÉCUPÉRATION DES DONNÉES DU FORMULAIRE
+// ============================================================================
+
+/*
+ * $_POST contient toutes les données envoyées par le formulaire
+ * On les copie dans $postData pour plus de lisibilité
+ */
+$postData = $_POST;
+
+
+// ============================================================================
+// VALIDATION ET AUTHENTIFICATION
+// ============================================================================
+
+/*
+ * Vérification que les champs requis sont bien présents
+ * isset() vérifie si une variable existe et n'est pas null
+ */
+if (isset($postData['email']) && isset($postData['mdp'])) {
+
+    // ÉTAPE 1 : Validation du format de l'email
+    if (!filter_var($postData['email'], FILTER_VALIDATE_EMAIL)) {
+        // L'email n'est pas valide, on stocke un message d'erreur en session
+        $_SESSION['LOGIN_ERROR_MESSAGE'] = 'Identifiants/Mdp incorrect';
+
+    } else {
+        // ÉTAPE 2 : Recherche de l'utilisateur dans la base de données
+
+        $sqlQueryUser = 'SELECT * FROM `users`';
+        $userbdd = $mysqlClient->prepare($sqlQueryUser);
+        $userbdd->execute();
+        // $abonnes contient un tableau avec tous les abonnés
+        $users = $userbdd->fetchAll();
+
+        /*
+         * $abonnes vient de functions.php et contient tous les utilisateurs
+         * On parcourt le tableau pour trouver une correspondance
+         */
+        foreach ($users as $user) {
+            /*
+             * Vérification des identifiants
+             *
+             * password_verify() compare le mot de passe en clair saisi par
+             * l'utilisateur avec le hash stocké en base (généré par password_hash())
+             */
+            if (
+                $user['mail'] === $postData['email'] &&
+                password_verify($postData['mdp'], $user['pswd'])
+            ) {
+                /*
+                 * ✅ AUTHENTIFICATION RÉUSSIE
+                 *
+                 * On stocke les informations de l'utilisateur en session
+                 * Attention : On ne stocke JAMAIS le mot de passe en session !
+                 */
+                $_SESSION['LOGGED_USER'] = [
+                    'email' => $user['mail'],
+                    'nom' => $user['nom'],
+                    'prenom' => $user['prenom'],
+                    'role' => $user['role'],
+                ];
+            }
+        }
+
+
+        // ÉTAPE 3 : Vérification du résultat de l'authentification
+        if (!isset($_SESSION['LOGGED_USER'])) {
+            /*
+             * ❌ ÉCHEC DE L'AUTHENTIFICATION
+             *
+             * Aucun utilisateur ne correspond aux identifiants fournis
+             * On crée un message d'erreur
+             *
+             * sprintf() permet de formater une chaîne avec des variables
+             * strip_tags() retire les balises HTML pour éviter les injections XSS
+             */
+            $_SESSION['LOGIN_ERROR_MESSAGE'] = sprintf(
+                'Les informations envoyées ne permettent pas de vous identifier : (%s/%s)',
+                $postData['email'],
+                strip_tags($postData['mdp'])
+            );
+        }
+    }
+
+    // ============================================================================
+    // REDIRECTION VERS LA PAGE D'ACCUEIL
+    // ============================================================================
+
+    /*
+     * Dans tous les cas (succès ou échec), on redirige vers l'accueil
+     * - En cas de succès : l'utilisateur verra le contenu réservé
+     * - En cas d'échec : l'utilisateur verra le message d'erreur
+     */
+    redirectToUrl('index.php');
+}
