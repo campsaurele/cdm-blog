@@ -66,7 +66,7 @@ if (!isset($_GET['id'])) {
 
     echo "<section class=\"d-flex flex-column\">";
     echo "<h1 class=\"text-center\">".$title."</h1>";
-    echo buttonAdd("/cdm-blog/admin/add.php?t=".$_GET['t']);
+    echo buttonAdd(BASE_URL."/common/admin/add.php?t=".$_GET['t']);
     echo "<div class=\"d-flex flex-wrap justify-content-evenly gap-3\">";
 
     foreach ($news as $new) {

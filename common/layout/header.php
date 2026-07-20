@@ -1,7 +1,7 @@
 <?php
 $links = [
-    "Articles" => "/cdm-blog/public/article.php?t=articles",
-    "Résultats" => "/cdm-blog/public/resultat.php?t=results"
+    "Articles" => "/cdm-blog/pages/article.php?t=articles",
+    "Résultats" => "/cdm-blog/pages/resultat.php?t=results"
 ];
 //    $base_href = "/cdm-blog/public/"
 
@@ -11,8 +11,8 @@ $links = [
 <header class=" bg-dark-subtle mb-5">
     <nav class="navbar navbar-expand-lg px-4">
         <div class="container">
-            <a class="navbar-brand" href="/cdm-blog/index.php">
-            <img src="/cdm-blog/assets/img/coupe-du-monde.png" alt="Icon world cup" width="30" height="30">
+            <a class="navbar-brand" href="<?= BASE_URL."/public/index.php" ?>">
+            <img src="/cdm-blog/public/assets/img/coupe-du-monde.png" alt="Icon world cup" width="30" height="30">
              CDM - 2026
             </a>
         </div>

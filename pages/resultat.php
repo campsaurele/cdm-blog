@@ -1,4 +1,4 @@
-<?php require_once(__DIR__.'/../components/button.php'); ?>
+<?php require_once(__DIR__.'/../common/components/button.php'); ?>
 
 
 <!DOCTYPE html>
@@ -11,10 +11,10 @@
     <title>CDM 2026 - Résultats</title>
 </head>
 <body>
-    <?php include __DIR__. '/../layout/header.php'; ?>
+    <?php include __DIR__. '/../common/layout/header.php'; ?>
 
 
-    <?php include __DIR__. '/../components/crud/read.php'; ?>
+    <?php include __DIR__. '/../common/components/crud/read.php'; ?>
 
      </section>
 

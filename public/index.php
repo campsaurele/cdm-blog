@@ -1,16 +1,22 @@
+<?php
+    
+require_once(__DIR__.'/../common/config/config.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/cdm-blog/assets/css/style.css">
+    <link rel="stylesheet" href="/cdm-blog/public/assets/css/style.css">
     <title>CDM 2026 - Accueil</title>
 </head>
 <body>
 
 
-<?php include __DIR__.('/layout/header.php');
+<?php include __DIR__.('/../common/layout/header.php');
 
 if (!isset($_SESSION['LOGGED_USER'])) : ?>
 <section class="d-flex justify-content-center align-content-center">
@@ -32,41 +38,62 @@ if (!isset($_SESSION['LOGGED_USER'])) : ?>
 
             <div class="mb-3">
                 <h2>Pour accéder au contenu, connectez-vous</h2>
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required
-                    aria-describedby="email-help" placeholder="you@exemple.com">
-                    <div id="email-help" class="form-text">L'email utilisé lors de la création de compte.</div>
+                <label for="connect_login" class="form-label">Login</label>
+                <input type="text" class="form-control" id="connect_login" name="connect_login" required
+                aria-describedby="email-help" placeholder="charlie123">
+                <div id="email-help" class="form-text">Le login utilisé lors de la création de compte.</div>
             </div>
 
             <div class="mb-3">
-                <label for="mdp" class="form-label">Mot de passe</label>
+                <label for="password" class="form-label">Mot de passe</label>
 
-                <input type="password" class="form-control" id="mdp" name="mdp" required>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
 
-        <div class=" accordion">
-            <form>
+        <div class="accordion mt-3">
+            <div class="accordion-item">
+                 <h2 class="accordion-header" id="flush-headingOne">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Créer un compte
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+            <form class="accordion-body" action="submit-login.php?t=user" method="POST">
                  <div class="mb-3">
-                <h2>Pour accéder au contenu, connectez-vous</h2>
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required
-                    aria-describedby="email-help" placeholder="you@exemple.com">
-                    <div id="email-help" class="form-text">L'email utilisé lors de la création de compte.</div>
+                <label for="create_login" class="form-label">Login</label>
+                <input type="text" class="form-control" id="create_login" name="create_login" required
+                    aria-describedby="login-help" placeholder="charlie123">
             </div>
 
             <div class="mb-3">
-                <label for="mdp" class="form-label">Mot de passe</label>
+                <label for="create_password" class="form-label">Mot de passe</label>
 
-                <input type="password" class="form-control" id="mdp" name="mdp" required>
+                <input type="password" class="form-control" id="create_password" name="create_password" onkeyup='checkPassword();' required />
+                <div id="password-help" class="form-text">
+                Doit contenir obligatoirement :    
+                <ul>
+                        <li id="nbcar">6 caractères</li>
+                        <li id="majcar">1 majuscule</li>
+                        <li id="speccar">1 caractère spéciale</li>
+                    </ul> </div>
+                <label for="confirm_password" class="form-label">Confirmez le mot de passe</label>
+                <input type="password" class="form-control" name="confirm_password" id="confirm_password" disabled="true"  onkeyup='matchPassword();' /> 
+                <span id='message'></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="submit" class="btn btn-primary" id="create_submit">Envoyer</button>
         </form>
+    </div>
+            </div>
         </div>
     </div>
+
+
+    
 
     </section>
 <?php else :
@@ -108,8 +135,7 @@ if (!isset($_SESSION['LOGGED_USER'])) : ?>
             </div>
         </div>
 
-        <!-- Import de Bootstrap JavaScript (nécessaire pour les modales) -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
 
         <!--
             Script JavaScript pour afficher automatiquement la modale
@@ -127,6 +153,8 @@ if (!isset($_SESSION['LOGGED_USER'])) : ?>
     endif; // Fin de la vérification MODAL_SHOWN
 endif; // Fin de la vérification LOGGED_USER
 ?>
-    
+            <!-- Import de Bootstrap JavaScript (nécessaire pour les modales) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/cdm-blog/public/assets/js/script.js"></script>
 </body>
 </html>

@@ -8,8 +8,8 @@ require_once(__DIR__.'/function/truncate.php');
 function pageArticle(string $title, string $desc, string $date, string $author, string $id): string
 {
 
-    $src = BASE_URL."/assets/img/";
-    $path = __DIR__."/../assets/img/";
+    $src = BASE_URL."/public/assets/img/";
+    $path = __DIR__."/../public/assets/img/";
     $fileName = $id . ".webp";
     $filePath = $path . $fileName;
     $srcPath = $src . $fileName;
@@ -32,7 +32,7 @@ function pageArticle(string $title, string $desc, string $date, string $author, 
             <div class=\"col-6\">
             <p>".$desc."</p>
             <small>Publié par ".$author."<br>le ".$date."</small><br><br>
-            ".buttonBack('/cdm-blog/public/article.php?t=articles')."
+            ".buttonBack('/cdm-blog/pages/article.php?t=articles')."
             </div>
              
         </div>

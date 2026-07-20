@@ -21,6 +21,11 @@ if (isset($_GET['t'])) {
             $title = "Résultat";
             $required = ["equipe1","equipe2","score","resume","lieu","date_match",];
             break;
+        case "user":
+            $table = "user";
+            $title = "Utilisateur";
+            $required = ["login", "password"];
+            break;
         default:
             die("Mauvais lien de recherche");
     };
@@ -34,7 +39,7 @@ $validate = validatePost($postData, $required);
 
 if (!$validate) {
     echo "Les champs ne sont pas remplis <br>";
-    echo buttonBack('/cdm-blog/admin/add.php?t='.$_GET['t']);
+    echo buttonBack(BASE_URL.'/common/admin/add.php?t='.$_GET['t']);
     return;
 }
 
@@ -70,7 +75,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 
         // Déplacement du fichier temporaire vers le dossier img/
         // avec renommage selon l'ID de l'article
-        $dossier = __DIR__."/../../assets/img/";
+        $dossier = __DIR__."/../../public/assets/img/";
         $nomFichier = $imageId . ".webp";
 
         // move_uploaded_file() déplace le fichier du dossier temporaire vers sa destination finale

@@ -20,7 +20,7 @@ function pageResult(string $equipe1, string $equipe2, string $date, string $scor
             <div class=\"col-6\">
             <p>".$resume."</p>
             <small>Match du  ".$date."<br> à ".$lieu."</small><br><br>
-            ".buttonBack('/cdm-blog/public/article.php?t=articles')."
+            ".buttonBack('/cdm-blog/pages/article.php?t=articles')."
             </div>
              
         </div>

@@ -11,7 +11,7 @@ function update()
     if (isset($_GET['t']) && isset($_GET['id'])) {
         switch ($_GET['t']) {
             case "articles":
-                $href = "/cdm-blog/public/article.php?t=articles";
+                $href = BASE_URL."/pages/article.php?t=articles";
                 $title = "article";
                 $id = $_GET['id'];
                 $table = "articles_presse";
@@ -85,7 +85,7 @@ function update()
                 </div>";
 
             case "results":
-                $href = "/cdm-blog/public/resultat.php?t=results";
+                $href = BASE_URL."/pages/resultat.php?t=results";
                 $title = "résultat";
                 $table = "resultats_sportifs";
                 $id = $_GET['id'];

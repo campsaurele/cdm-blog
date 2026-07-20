@@ -8,8 +8,8 @@ require_once(__DIR__.'/function/truncate.php');
 function cardArticle(string $title, string $desc, string $date, string $author, string $id): string
 {
 
-    $src = BASE_URL."/assets/img/";
-    $path = __DIR__."/../assets/img/";
+    $src = BASE_URL."/public/assets/img/";
+    $path = __DIR__."/../public/assets/img/";
     $fileName = $id . ".webp";
     $filePath = $path . $fileName;
     $srcPath = $src . $fileName;
@@ -32,11 +32,11 @@ function cardArticle(string $title, string $desc, string $date, string $author, 
             <small>par ". htmlspecialchars($author)."</small>
             <p class=\" card-text\">". truncateString(htmlspecialchars($desc))."</p>"
               .
-              buttonMore(BASE_URL.'/public/article.php?t='.$_GET['t'].'&id='.htmlspecialchars($id))
+              buttonMore(BASE_URL.'/pages/article.php?t='.$_GET['t'].'&id='.htmlspecialchars($id))
               .
               "<div class=\"d-flex flex-row\">"
               .
-                  buttonModif(BASE_URL.'/admin/update.php?t='.$_GET['t'].'&id='.htmlspecialchars($id)).
+                  buttonModif(BASE_URL.'/common/admin/update.php?t='.$_GET['t'].'&id='.htmlspecialchars($id)).
                   buttonModal(htmlspecialchars($id))
               .
               "</div>
