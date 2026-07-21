@@ -1,4 +1,4 @@
-var matchPassword = function () {
+const matchPassword = function () {
   if (
     document.getElementById("create_password").value ==
     document.getElementById("confirm_password").value
@@ -19,7 +19,7 @@ var matchPassword = function () {
   }
 };
 
-var checkPassword = function () {
+const checkPassword = function () {
   let password = document.getElementById("create_password");
   let nbcar = document.getElementById("nbcar");
   let majcar = document.getElementById("majcar");
@@ -29,6 +29,7 @@ var checkPassword = function () {
   let majcarCheck = false;
   let speccarCheck = false;
 
+  // IF 1
   if (password.value.length > 5) {
     nbcar.classList.add("text-success");
     nbcar.classList.remove("text-danger");
@@ -39,6 +40,7 @@ var checkPassword = function () {
     nbcarCheck = false;
   }
 
+  // IF 2
   if (password.value.match(/[A-Z]/)) {
     majcar.classList.add("text-success");
     majcar.classList.remove("text-danger");
@@ -49,7 +51,11 @@ var checkPassword = function () {
     nbcarCheck = false;
   }
 
-  if (password.value.match(/[^A-Za-z0-9 ]/)) {
+  // IF 3 Special Char
+  // (password.value.match(/[^A-Za-z0-9 ]/) condition initial, but cyrilic, arabic, chinese, japanese.. letters would be consider special char.
+
+  // here we select char the way they're sort in ASCII tab.
+  if (password.value.match(/[ -/:-@[-`{-~]/)) {
     speccar.classList.add("text-success");
     speccar.classList.remove("text-danger");
     speccarCheck = true;
@@ -59,6 +65,7 @@ var checkPassword = function () {
     speccarCheck = false;
   }
 
+  // IF ALL
   if (speccarCheck && nbcarCheck && majcarCheck) {
     password.classList.add("is-valid");
     password.classList.remove("is-invalid");

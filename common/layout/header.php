@@ -7,7 +7,7 @@ $links = [
 
 
 ?>
-
+<?php session_start(); ?>
 <header class=" bg-dark-subtle mb-5">
     <nav class="navbar navbar-expand-lg px-4">
         <div class="container">

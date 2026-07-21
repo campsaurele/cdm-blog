@@ -18,12 +18,22 @@ require_once(__DIR__.'/../common/config/config.php');
 
 <?php include __DIR__.('/../common/layout/header.php');
 
+
 if (!isset($_SESSION['LOGGED_USER'])) : ?>
 <section class="d-flex justify-content-center align-content-center">
 
     <div class="card col-12 col-md-4 p-3">
+        <h2 class="mb-3">Pour accéder au contenu, connectez-vous</h2>
  
-        <form action="submit-login.php" method="POST">
+        <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Se connecter
+            </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <form class="accordion-body" action="../common/components/login-post.php" method="POST">
 
             <?php if (!empty($_SESSION['LOGIN_ERROR_MESSAGE'])) : ?>
                 <div class="alert alert-danger" role="alert">
@@ -37,59 +47,85 @@ if (!isset($_SESSION['LOGGED_USER'])) : ?>
             <?php endif; ?>
 
             <div class="mb-3">
-                <h2>Pour accéder au contenu, connectez-vous</h2>
-                <label for="connect_login" class="form-label">Login</label>
-                <input type="text" class="form-control" id="connect_login" name="connect_login" required
-                aria-describedby="email-help" placeholder="charlie123">
-                <div id="email-help" class="form-text">Le login utilisé lors de la création de compte.</div>
+                <label for="connect-login" class="form-label">Login</label>
+                <input type="text" class="form-control" id="connect-login" name="login" required
+                aria-describedby="login-help" placeholder="charlie123">
+                <div id="login-help" class="form-text">Le login utilisé lors de la création de compte.</div>
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
+                <label for="login-password" class="form-label">Mot de passe</label>
 
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="login-password" name="password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="submit" class="btn btn-primary" name="action" value="connect">Envoyer</button>
         </form>
+            </div>
+  </div>
 
-        <div class="accordion mt-3">
+            <!-- Create account form - accordion item2 -->
             <div class="accordion-item">
-                 <h2 class="accordion-header" id="flush-headingOne">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        Créer un compte
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Créer un compte
+                    </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse"aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 
-            <form class="accordion-body" action="submit-login.php?t=user" method="POST">
-                 <div class="mb-3">
-                <label for="create_login" class="form-label">Login</label>
-                <input type="text" class="form-control" id="create_login" name="create_login" required
-                    aria-describedby="login-help" placeholder="charlie123">
-            </div>
+                    <form class="accordion-body" action="../common/components/login-post.php" method="POST">
 
-            <div class="mb-3">
-                <label for="create_password" class="form-label">Mot de passe</label>
 
-                <input type="password" class="form-control" id="create_password" name="create_password" onkeyup='checkPassword();' required />
-                <div id="password-help" class="form-text">
-                Doit contenir obligatoirement :    
-                <ul>
-                        <li id="nbcar">6 caractères</li>
-                        <li id="majcar">1 majuscule</li>
-                        <li id="speccar">1 caractère spéciale</li>
-                    </ul> </div>
-                <label for="confirm_password" class="form-label">Confirmez le mot de passe</label>
-                <input type="password" class="form-control" name="confirm_password" id="confirm_password" disabled="true"  onkeyup='matchPassword();' /> 
-                <span id='message'></span>
-            </div>
+                    <div class="mb-3">
+                    <label for="create_login" class="form-label">Login</label>
+                    <input type="text" class="form-control" id="create_login" name="login" required
+                        aria-describedby="login-help" placeholder="charlie123">
+                    </div>
 
-            <button type="submit" class="btn btn-primary" id="create_submit">Envoyer</button>
-        </form>
-    </div>
+                    <div class="mb-3">
+                        <label for="create_password" class="form-label">Mot de passe</label>
+
+                        <input type="password" class="form-control" id="create_password" name="password" onkeyup='checkPassword();' required />
+                        <div id="password-help" class="form-text">
+                        Doit contenir obligatoirement :    
+                        <ul>
+                                <li id="nbcar">6 caractères</li>
+                                <li id="majcar">1 majuscule</li>
+                                <li id="speccar">1 caractère spéciale</li>
+                            </ul> </div>
+                        <label for="confirm_password" class="form-label">Confirmez le mot de passe</label>
+                        <input type="password" class="form-control" id="confirm_password" disabled="true"  onkeyup='matchPassword();' /> 
+                        <span id='message'></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-3" id="create_submit" name="action" value="create" disabled="true">Envoyer</button>
+                    
+            <!-- Message Erreur / Confirmation for Account Creation -->
+                    <?php if (!empty($_SESSION['CREATE_MESSAGE'])) : ?>
+                    <div class="alert alert-danger" role="alert">
+                    <?php
+                    // htmlspecialchars() protège contre les injections XSS
+                    echo htmlspecialchars($_SESSION['CREATE_MESSAGE']);
+                    // Suppression du message pour qu'il ne s'affiche qu'une fois
+                    unset($_SESSION['CREATE_MESSAGE']);
+                    ?>
+                    </div>
+                    <?php elseif (!empty($_SESSION['CREATE_MESSAGE_SUCCESS'])) : ?>
+                    <div class="alert alert-success" role="alert">
+                                         <?php
+                    // htmlspecialchars() protège contre les injections XSS
+                    echo htmlspecialchars($_SESSION['CREATE_MESSAGE_SUCCESS']);
+                    // Suppression du message pour qu'il ne s'affiche qu'une fois
+                    unset($_SESSION['CREATE_MESSAGE_SUCCESS']);
+                    ?>   
+                    
+                    </div>
+                    <?php endif; ?>  
+                </form>
+             </div>
             </div>
         </div>
+
     </div>
 
 
